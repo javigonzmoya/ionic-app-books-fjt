@@ -1,0 +1,7 @@
+{
+  "name": "app-books-fjt",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
