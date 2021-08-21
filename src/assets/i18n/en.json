@@ -1,5 +1,10 @@
 {
   "PUBLIC": "Public",
   "PRIVATE": "Private",
-  "BACK": "back"
+  "BACK": "back",
+  "LOADING": "Loading",
+  "CONTINUE": "Continue",
+  "SAVE": "Save",
+  "CANCEL": "Cancel",
+  "EXIT": "Exit"
 }
