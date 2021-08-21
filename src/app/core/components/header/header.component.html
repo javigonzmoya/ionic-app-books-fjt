@@ -1,8 +1,20 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-back-button
+        defaultHref="/"
+        [text]="'BACK' | translate"
+      ></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ titleHeader }}</ion-title>
+    <ion-title>{{ titleHeader | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onClick()">
+        <ion-icon
+          [color]="titleHeader === 'PUBLIC' ? 'primary' : 'danger'"
+          slot="icon-only"
+          name="person-outline"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>

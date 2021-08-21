@@ -15,6 +15,7 @@ import { CoreModule } from '../core/core.module';
     CoreModule,
     FormsModule,
     IonicModule,
+
     PublicPageRoutingModule,
   ],
   declarations: [PublicPage],
