@@ -1,10 +1,18 @@
 {
   "PUBLIC": "Publico",
   "PRIVATE": "Privado",
-  "BACK": "atras",
+  "BACK": "Volver",
   "LOADING": "Cargando",
   "CONTINUE": "Continuar",
   "SAVE": "Guardar",
+  "ACCEPT": "Aceptar",
   "CANCEL": "Cancelar",
-  "EXIT": "Salir"
+  "EXIT": "Salir",
+  "EMAIL": "Correo",
+  "PASSWORD": "Contraseña",
+  "REGISTER": "Registarse",
+  "LOGIN": "Logearse",
+  "ACCOUNTOK": "ya tengo cuenta...",
+  "ALERT_ERROR_SUB": "Error inexperado!!!",
+  "ALERT_ERROR_FORM": "Por favor. Revisa que los datos introducidos son correctos."
 }

@@ -1,10 +1,18 @@
 {
   "PUBLIC": "Public",
   "PRIVATE": "Private",
-  "BACK": "back",
+  "BACK": "Back",
   "LOADING": "Loading",
   "CONTINUE": "Continue",
   "SAVE": "Save",
+  "ACCEPT": "Accept",
   "CANCEL": "Cancel",
-  "EXIT": "Exit"
+  "EXIT": "Exit",
+  "EMAIL": "Email",
+  "PASSWORD": "Password",
+  "REGISTER": "Register",
+  "LOGIN": "Login",
+  "ACCOUNTOK": "I already have an account...",
+  "ALERT_ERROR_SUB": "Unexpected error!!!",
+  "ALERT_ERROR_FORM": "Please. Check that the data entered is correct."
 }

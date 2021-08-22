@@ -1,3 +1,42 @@
-<p>
-  login works!
-</p>
+<ion-content>
+  <div class="container-center">
+    <form [formGroup]="loginForm" (ngSubmit)="submitHanle()">
+      <ion-grid>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="4" class="ion-align-self-center">
+            <ion-img
+              src="../../../assets/img/log-login.png"
+              alt="imagen de usuario"
+            ></ion-img>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label>{{ "EMAIL" | translate }}</ion-label>
+              <ion-input formControlName="email" type="email"></ion-input>
+            </ion-item>
+            <ion-item class="ion-margin-bottom">
+              <ion-label>{{ "PASSWORD" | translate }}</ion-label>
+              <ion-input formControlName="password" type="password"></ion-input>
+            </ion-item>
+            <ion-button
+              class="ion-margin-bottom"
+              expand="block"
+              color="primary"
+              type="submit"
+            >
+              <ion-icon slot="start" name="person"></ion-icon>
+              {{ "LOGIN" | translate }}
+            </ion-button>
+            <ion-button expand="block" color="warning" routerLink="../register">
+              <ion-icon slot="start" name="person-add"></ion-icon>
+              {{ "REGISTER" | translate }}
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </div>
+</ion-content>

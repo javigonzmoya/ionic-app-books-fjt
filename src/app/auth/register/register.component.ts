@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -6,9 +7,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
+  registerForm: FormGroup;
 
-  constructor() { }
+  constructor(private fB: FormBuilder) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.registerForm = this.fB.group({
+      email: ['', [Validators.email]],
+      password1: [
+        'javier',
+        Validators.compose([Validators.required, Validators.minLength(6)]),
+      ],
+      password2: [
+        'javier',
+        Validators.compose([Validators.required, Validators.minLength(6)]),
+      ],
+    });
+  }
 
+  submitHanle() {
+    console.log(this.registerForm.value);
+  }
 }

@@ -5,27 +5,29 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'public',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then( m => m.AuthPageModule)
+    loadChildren: () =>
+      import('./auth/auth.module').then((m) => m.AuthPageModule),
   },
   {
     path: 'private',
-    loadChildren: () => import('./private/private.module').then( m => m.PrivatePageModule)
+    loadChildren: () =>
+      import('./private/private.module').then((m) => m.PrivatePageModule),
   },
   {
     path: 'public',
-    loadChildren: () => import('./public/public.module').then( m => m.PublicPageModule)
+    loadChildren: () =>
+      import('./public/public.module').then((m) => m.PublicPageModule),
   },
-
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

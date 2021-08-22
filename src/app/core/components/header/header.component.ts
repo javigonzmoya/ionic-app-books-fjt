@@ -10,4 +10,8 @@ export class HeaderComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  get isPublic(): boolean {
+    return this.titleHeader === 'PUBLIC';
+  }
 }
