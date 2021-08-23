@@ -1,0 +1,32 @@
+$bg-form-color: #3f51b5;
+$white-color: #ffff;
+* {
+  box-sizing: border-box;
+}
+
+form {
+  border-radius: 5px;
+  background-color: darken($color: $white-color, $amount: 3);
+  box-shadow: 10px 10px 15px $bg-form-color;
+}
+.container-center {
+  height: 50%;
+  margin-top: 10px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  margin-right: 25%;
+  margin-left: 25%;
+}
+
+@media (max-width: 450px) {
+  .container-center {
+    height: 100%;
+    margin: 0;
+    background-color: $white-color;
+    form {
+      border-radius: 0;
+      box-shadow: 0;
+    }
+  }
+}

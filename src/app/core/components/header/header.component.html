@@ -2,17 +2,18 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button
+        color="primary"
         defaultHref="/"
         [text]="'BACK' | translate"
       ></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ titleHeader | translate }}</ion-title>
+    <ion-title color="primary">{{ titleHeader | translate }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="onClick()">
+      <ion-button routerLink="/auth">
         <ion-icon
-          [color]="titleHeader === 'PUBLIC' ? 'primary' : 'danger'"
+          [color]="isPublic ? 'danger' : 'primary'"
           slot="icon-only"
-          name="person-outline"
+          [name]="isPublic ? 'person-outline' : 'person'"
         ></ion-icon>
       </ion-button>
     </ion-buttons>

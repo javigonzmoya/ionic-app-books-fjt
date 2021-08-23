@@ -1,0 +1,17 @@
+<ion-footer>
+  <ion-toolbar>
+    <ion-item>
+      <ion-label>{{ "LANGUAGE" | translate }}</ion-label>
+      <ion-select
+        #langeSelect
+        [(ngModel)]="lanSelect"
+        (ionChange)="selectLang(langeSelect.value)"
+        placeholder="Select One"
+      >
+        <ion-select-option *ngFor="let lang of langs" [value]="lang">{{
+          lang
+        }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>

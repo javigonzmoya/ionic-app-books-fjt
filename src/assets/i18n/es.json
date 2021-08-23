@@ -1,10 +1,21 @@
 {
   "PUBLIC": "Publico",
   "PRIVATE": "Privado",
-  "BACK": "atras",
+  "BACK": "Volver",
   "LOADING": "Cargando",
   "CONTINUE": "Continuar",
   "SAVE": "Guardar",
+  "ACCEPT": "Aceptar",
   "CANCEL": "Cancelar",
-  "EXIT": "Salir"
+  "EXIT": "Salir",
+  "EMAIL": "Correo",
+  "PASSWORD": "Contraseña",
+  "REGISTER": "Registarse",
+  "LOGIN": "Logearse",
+  "LANGUAGE": "Idioma",
+  "ACCOUNTOK": "ya tengo cuenta...",
+  "NAVIGATE_NO_AUTH": "Seguir sin autenticar...",
+  "ALERT_ERROR_SUB": "Error inexperado!!!",
+  "ALERT_ERROR_FORM": "Por favor. Revisa que los datos introducidos son correctos.",
+  "ALERT_ERROR_PASS_NOMACH": "Contraseñas deben de ser iguales."
 }
