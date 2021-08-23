@@ -12,7 +12,10 @@
   "PASSWORD": "Password",
   "REGISTER": "Register",
   "LOGIN": "Login",
+  "LANGUAGE": "Language",
   "ACCOUNTOK": "I already have an account...",
+  "NAVIGATE_NO_AUTH": "Continue unauthenticated ...",
   "ALERT_ERROR_SUB": "Unexpected error!!!",
-  "ALERT_ERROR_FORM": "Please. Check that the data entered is correct."
+  "ALERT_ERROR_FORM": "Please. Check that the data entered is correct.",
+  "ALERT_ERROR_PASS_NOMACH": "Passwords must be the same."
 }

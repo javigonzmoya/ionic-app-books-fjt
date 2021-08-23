@@ -1,7 +1,17 @@
 $bg-form-color: #3f51b5;
 $white-color: #ffff;
+* {
+  box-sizing: border-box;
+}
 
+form {
+  border-radius: 5px;
+  background-color: darken($color: $white-color, $amount: 3);
+  box-shadow: 10px 10px 15px $bg-form-color;
+}
 .container-center {
+  height: 50%;
+  margin-top: 10px;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
@@ -9,10 +19,14 @@ $white-color: #ffff;
   margin-left: 25%;
 }
 
-@media (max-width: 350px) {
+@media (max-width: 450px) {
   .container-center {
-    margin-top: 0;
-    margin-right: 0;
-    margin-left: 0;
+    height: 100%;
+    margin: 0;
+    background-color: $white-color;
+    form {
+      border-radius: 0;
+      box-shadow: 0;
+    }
   }
 }

@@ -21,13 +21,13 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.fB.group({
       email: ['', [Validators.email, Validators.required]],
       password: [
-        'javier',
+        '',
         Validators.compose([Validators.required, Validators.minLength(6)]),
       ],
     });
   }
 
-  submitHanle() {
+  login() {
     if (this.loginForm.invalid) {
       this.presentAlert();
       return;

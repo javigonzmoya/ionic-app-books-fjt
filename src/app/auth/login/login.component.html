@@ -1,6 +1,6 @@
 <ion-content>
   <div class="container-center">
-    <form [formGroup]="loginForm" (ngSubmit)="submitHanle()">
+    <form [formGroup]="loginForm">
       <ion-grid>
         <ion-row class="ion-justify-content-center">
           <ion-col size="4" class="ion-align-self-center">
@@ -26,13 +26,27 @@
               expand="block"
               color="primary"
               type="submit"
+              (click)="login()"
             >
               <ion-icon slot="start" name="person"></ion-icon>
               {{ "LOGIN" | translate }}
             </ion-button>
-            <ion-button expand="block" color="warning" routerLink="../register">
+            <ion-button
+              class="ion-margin-bottom"
+              expand="block"
+              color="warning"
+              routerLink="../register"
+            >
               <ion-icon slot="start" name="person-add"></ion-icon>
               {{ "REGISTER" | translate }}
+            </ion-button>
+            <ion-button
+              expand="block"
+              color="primary"
+              fill="outline"
+              routerLink="/"
+            >
+              {{ "NAVIGATE_NO_AUTH" | translate }}
             </ion-button>
           </ion-col>
         </ion-row>

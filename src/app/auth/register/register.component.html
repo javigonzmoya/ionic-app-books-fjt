@@ -1,6 +1,6 @@
 <ion-content>
   <div class="container-center">
-    <form [formGroup]="registerForm" (ngSubmit)="submitHanle()">
+    <form [formGroup]="registerForm">
       <ion-grid>
         <ion-row class="ion-justify-content-center">
           <ion-col size="4" class="ion-align-self-center">
@@ -31,11 +31,17 @@
                 type="password"
               ></ion-input>
             </ion-item>
+            <ion-label
+              color="danger"
+              *ngIf="registerForm.hasError('notSame')"
+              >{{ "ALERT_ERROR_PASS_NOMACH" | translate }}</ion-label
+            >
             <ion-button
               class="ion-margin-bottom"
               expand="block"
               color="success"
               type="submit"
+              (click)="register()"
             >
               <ion-icon slot="start" name="save"></ion-icon>
               {{ "SAVE" | translate }}
