@@ -27,7 +27,11 @@ describe('RegisterComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create a form with email, password', () => {
+  it('should create a form correctly', () => {
+    expect(component.registerForm.contains('name')).toBeTruthy();
+    expect(component.registerForm.contains('apellido1')).toBeTruthy();
+    expect(component.registerForm.contains('apellido2')).toBeTruthy();
+    expect(component.registerForm.contains('telefono')).toBeTruthy();
     expect(component.registerForm.contains('email')).toBeTruthy();
     expect(component.registerForm.contains('password1')).toBeTruthy();
     expect(component.registerForm.contains('password2')).toBeTruthy();
@@ -40,36 +44,32 @@ describe('RegisterComponent', () => {
     expect(emailControl.invalid).toBeTruthy();
     emailControl.setValue('kjskjskk@hjsahjd.com');
     expect(emailControl.valid).toBeTruthy();
-    expect(component.registerForm.valid).toBeTruthy();
   });
 
-  it('should valid in form password is required an min-lengh 6 and pass1 and pass2 togeder', () => {
+  it('should valid the form togeder', () => {
+    const nameControl = component.registerForm.get('name');
+    const ape1Control = component.registerForm.get('apellido1');
+    const ape2Control = component.registerForm.get('apellido2');
+    const telControl = component.registerForm.get('telefono');
     const passControl1 = component.registerForm.get('password1');
     const passControl2 = component.registerForm.get('password2');
     const emailControl = component.registerForm.get('email');
 
+    nameControl.setValue('');
+    ape1Control.setValue('');
+    ape2Control.setValue('sdfsdf');
+    telControl.setValue(2334);
+    emailControl.setValue('');
     passControl1.setValue('');
     passControl2.setValue('');
-    expect(passControl1.invalid).toBeTruthy();
-    expect(passControl2.invalid).toBeTruthy();
-
-    passControl1.setValue('qqq');
-    passControl2.setValue('qqq');
-    expect(passControl1.invalid).toBeTruthy();
-    expect(passControl2.invalid).toBeTruthy();
-
-    passControl1.setValue('111111');
-    passControl2.setValue('111112');
-    emailControl.setValue('javi@gmail.com');
-    expect(passControl1.valid).toBeTruthy();
-    expect(passControl2.valid).toBeTruthy();
     expect(component.registerForm.invalid).toBeTruthy();
-
-    passControl1.setValue('111111');
-    passControl2.setValue('111111');
+    nameControl.setValue('javi');
+    ape1Control.setValue('gonzalez');
+    ape2Control.setValue('');
+    telControl.setValue(233423456);
     emailControl.setValue('javi@gmail.com');
-    expect(passControl1.valid).toBeTruthy();
-    expect(passControl2.valid).toBeTruthy();
+    passControl1.setValue('123456');
+    passControl2.setValue('123456');
     expect(component.registerForm.valid).toBeTruthy();
   });
 
