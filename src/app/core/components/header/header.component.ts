@@ -1,5 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { logout } from 'src/app/store/actions/auth';
+import { AppState } from 'src/app/store/app.reducers';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-header',
@@ -8,11 +12,19 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class HeaderComponent implements OnInit {
   @Input() titleHeader = '';
-  constructor() {}
+  isLogged = false;
+  user: User | null = null;
+  constructor(private store: Store<AppState>, private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.store.select('auth').subscribe((auth) => {
+      this.isLogged = !!auth.user;
+      this.user = auth.user;
+    });
+  }
 
-  get isPublic(): boolean {
-    return this.titleHeader === 'PUBLIC';
+  logout() {
+    this.store.dispatch(logout());
+    this.router.navigate(['/public']);
   }
 }

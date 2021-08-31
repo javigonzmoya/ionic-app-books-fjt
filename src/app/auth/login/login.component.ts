@@ -1,30 +1,62 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
+import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
+import { LoadingService } from 'src/app/core/services/loading.service';
+import { ToastService } from 'src/app/core/services/toast.service';
+import { login } from 'src/app/store/actions/auth';
+import { startLoading } from 'src/app/store/actions/ui/ui.actions';
+import { AppState } from 'src/app/store/app.reducers';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
+  loadingText = '';
+  accept = '';
+  alertErrorSub = '';
+  alertErrorForm = '';
+  transteSub: Subscription;
 
   constructor(
     private fB: FormBuilder,
     public alertController: AlertController,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private store: Store<AppState>,
+    public loadingService: LoadingService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit() {
     this.loginForm = this.fB.group({
-      email: ['', [Validators.email, Validators.required]],
+      email: ['javier2@gmail.com', [Validators.email, Validators.required]],
       password: [
-        '',
+        'javier',
         Validators.compose([Validators.required, Validators.minLength(6)]),
       ],
     });
+    this.transteSub = this.translate
+      .stream(['ACCEPT', 'ALERT_ERROR_SUB', 'ALERT_ERROR_FORM', 'LOADING'])
+      .subscribe((tags) => {
+        this.loadingText = tags.LOADING;
+        this.accept = tags.ACCEPT;
+        this.alertErrorSub = tags.ALERT_ERROR_SUB;
+        this.alertErrorForm = tags.ALERT_ERROR_FORM;
+      });
+    this.store.select('auth').subscribe((auth) => {
+      if (auth.error) {
+        this.toastService.presentToast(auth.error?.error.msg);
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.transteSub.unsubscribe();
   }
 
   login() {
@@ -32,20 +64,19 @@ export class LoginComponent implements OnInit {
       this.presentAlert();
       return;
     }
-    console.log(this.loginForm.value);
+    const { email = '', password = '' } = this.loginForm.value;
+
+    this.store.dispatch(startLoading());
+    this.store.dispatch(login({ email, password }));
   }
 
-  presentAlert() {
-    this.translate
-      .stream(['ACCEPT', 'ALERT_ERROR_SUB', 'ALERT_ERROR_FORM'])
-      .subscribe(async (resp) => {
-        const alert = await this.alertController.create({
-          cssClass: 'alert-text',
-          subHeader: resp.ALERT_ERROR_SUB,
-          message: resp.ALERT_ERROR_FORM,
-          buttons: [resp.ACCEPT],
-        });
-        await alert.present();
-      });
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'alert-text',
+      subHeader: this.alertErrorSub,
+      message: this.alertErrorForm,
+      buttons: [this.accept],
+    });
+    await alert.present();
   }
 }

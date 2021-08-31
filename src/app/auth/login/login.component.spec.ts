@@ -3,13 +3,21 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IonicModule } from '@ionic/angular';
+import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
 
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
+  let store: MockStore;
+  const initialState = {
+    ui: {
+      loading: false,
+    },
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -20,8 +28,10 @@ describe('LoginComponent', () => {
         RouterTestingModule,
         IonicModule.forRoot(),
       ],
+      providers: [provideMockStore({ initialState })],
     });
 
+    store = TestBed.inject(MockStore);
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -64,7 +74,7 @@ describe('LoginComponent', () => {
     const submitButton: HTMLElement = fixture.debugElement.query(
       By.css('ion-button[type="submit"]')
     ).nativeElement;
-    const spia = spyOn(component, 'login').and.callFake(() => true);
+    const spia = spyOn(component, 'login').and.callFake(() => {});
 
     submitButton.click();
     fixture.detectChanges();
@@ -72,7 +82,12 @@ describe('LoginComponent', () => {
   });
 
   it('should call alert because invalid params', () => {
-    const spia = spyOn(component, 'presentAlert').and.callFake(() => true);
+    const spia = spyOn(component, 'presentAlert').and.callFake(
+      () =>
+        new Promise((resolve) => {
+          resolve();
+        })
+    );
     component.login();
     expect(spia).toHaveBeenCalledTimes(1);
   });

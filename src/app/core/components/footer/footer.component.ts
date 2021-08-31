@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { LocalDataService } from '../../services/local-data.service';
 
 @Component({
   selector: 'app-footer',
@@ -11,15 +12,21 @@ export class FooterComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   @ViewChild('langeSelect') langeSelect: ElementRef;
   lanSelect = '';
-  constructor(private translate: TranslateService) {}
+  constructor(
+    private translate: TranslateService,
+    private ionStorage: LocalDataService
+  ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.langs = this.translate.getLangs();
-    this.lanSelect = this.translate.getDefaultLang();
-    this.selectLang(this.lanSelect);
+    const lan = await this.ionStorage.get('lan');
+
+    this.lanSelect = lan || this.translate.getDefaultLang();
   }
 
   selectLang(lan: string) {
     this.translate.use(lan);
+    this.translate.setDefaultLang(lan);
+    this.ionStorage.set('lan', lan);
   }
 }

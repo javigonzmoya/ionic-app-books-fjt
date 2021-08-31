@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
+import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { validateMachPassword } from 'src/app/core/helpers/custom.validators';
+import { ReqRegister } from 'src/app/core/models/reqRegister.model';
+import { ToastService } from 'src/app/core/services/toast.service';
+import { register } from 'src/app/store/actions/auth';
+import { AppState } from 'src/app/store/app.reducers';
 
 @Component({
   selector: 'app-register',
@@ -15,28 +20,38 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fB: FormBuilder,
     public alertController: AlertController,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private store: Store<AppState>,
+    public toastServive: ToastService
   ) {}
 
   ngOnInit() {
     this.registerForm = this.fB.group(
       {
-        name: ['', [Validators.required]],
-        apellido1: ['', [Validators.required]],
-        apellido2: [''],
-        telefono: [null, [Validators.required, Validators.minLength(9)]],
-        email: ['', [Validators.email, Validators.required]],
+        name: ['javier', [Validators.required]],
+        apellido1: ['hhdhddhdh', [Validators.required]],
+        apellido2: ['ddsfdfddf'],
+        telefono: [
+          2367346382476,
+          [Validators.required, Validators.minLength(9)],
+        ],
+        email: ['jfnksdjb@gmail.com', [Validators.email, Validators.required]],
         password1: [
-          '',
+          '123456',
           Validators.compose([Validators.required, Validators.minLength(6)]),
         ],
         password2: [
-          '',
+          '123456',
           Validators.compose([Validators.required, Validators.minLength(6)]),
         ],
       },
       { validator: validateMachPassword }
     );
+    this.store.select('auth').subscribe((auth) => {
+      if (auth.error) {
+        this.toastServive.presentToast(auth.error.error?.msg);
+      }
+    });
   }
 
   register() {
@@ -44,7 +59,12 @@ export class RegisterComponent implements OnInit {
       this.presentAlert();
       return;
     }
-    console.log(this.registerForm.value);
+    const dataForm: ReqRegister = {
+      ...this.registerForm.value,
+      password: this.registerForm.get('password1').value,
+    };
+
+    this.store.dispatch(register(dataForm));
   }
 
   presentAlert() {

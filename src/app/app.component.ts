@@ -1,22 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { LocalDataService } from './core/services/local-data.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
-  langs: string[] = [];
-  constructor(private translate: TranslateService) {
-    this.translate.setDefaultLang('en');
-    this.translate.use('en');
-    this.translate.addLangs(['es', 'en']);
-    this.langs = translate.getLangs();
-  }
+export class AppComponent implements OnInit {
+  constructor(
+    private translate: TranslateService,
+    private ionStorage: LocalDataService
+  ) {}
 
-  selectLang(event) {
-    console.log(event.target.value);
-    this.translate.use(event.target.value);
+  async ngOnInit() {
+    await this.ionStorage.init();
+    this.translate.addLangs(['es', 'en']);
+    this.translate.setDefaultLang('en');
+    const lan = await this.ionStorage.get('lan');
+    const lanSelect = lan || this.translate.getDefaultLang();
+    this.translate.use(lanSelect);
   }
 }

@@ -9,11 +9,15 @@
     </ion-buttons>
     <ion-title color="primary">{{ titleHeader | translate }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button routerLink="/auth">
+      <ion-button *ngIf="!isLogged" routerLink="/auth">
+        <ion-icon color="primary" slot="icon-only" name="person"></ion-icon>
+      </ion-button>
+      <ion-label>{{ user?.name }}</ion-label>
+      <ion-button *ngIf="isLogged" (click)="logout()">
         <ion-icon
-          [color]="isPublic ? 'danger' : 'primary'"
+          color="danger"
           slot="icon-only"
-          [name]="isPublic ? 'person-outline' : 'person'"
+          name="person-outline"
         ></ion-icon>
       </ion-button>
     </ion-buttons>

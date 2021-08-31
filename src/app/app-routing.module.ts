@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { PrivateGuard } from './core/guards/private.guard';
+import { PublicGuard } from './core/guards/public.guard';
 
 const routes: Routes = [
   {
@@ -14,11 +16,13 @@ const routes: Routes = [
   },
   {
     path: 'private',
+    canLoad: [PrivateGuard],
     loadChildren: () =>
       import('./private/private.module').then((m) => m.PrivatePageModule),
   },
   {
     path: 'public',
+    canLoad: [PublicGuard],
     loadChildren: () =>
       import('./public/public.module').then((m) => m.PublicPageModule),
   },
