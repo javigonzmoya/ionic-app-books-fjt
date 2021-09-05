@@ -13,9 +13,16 @@ const URL = environment.baseUrl;
 export class RoomsService {
   constructor(private htpp: HttpClient) {}
 
-  // login(email: string, password: string): Observable<RespAuth> {
-  //   return this.htpp.post<RespAuth>(`${URL}/auth`, { email, password });
-  // }
+  addRoom(room: Room): Observable<{ ok: boolean; msg: string }> {
+    return this.htpp.post<{ ok: boolean; msg: string }>(`${URL}/rooms`, room);
+  }
+
+  editRoom(id: string, room: Room): Observable<{ ok: boolean; msg: string }> {
+    return this.htpp.put<{ ok: boolean; msg: string }>(
+      `${URL}/rooms/${id}`,
+      room
+    );
+  }
 
   getRooms() {
     return this.htpp.get<{ ok: boolean; rooms: Room[] }>(`${URL}/rooms`);

@@ -1,4 +1,7 @@
 <ion-content>
+  <ion-button shape="round" class="fixed" (click)="newRoom()">
+    <ion-icon slot="icon-only" name="add"></ion-icon>
+  </ion-button>
   <ion-card *ngFor="let room of rooms" (click)="selectRoom(room)">
     <ion-card-header>
       <ion-card-title>{{room.name}}</ion-card-title>

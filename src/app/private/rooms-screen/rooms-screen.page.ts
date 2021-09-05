@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
-import { loadRooms, selectRoom } from 'src/app/store/actions/rooms';
+import {
+  loadRooms,
+  selectRoom,
+  unSelectRoom,
+} from 'src/app/store/actions/rooms';
 import { AppState } from 'src/app/store/app.reducers';
 import { Room } from '../models/room.model';
 import { ModalFormRoomPage } from './modal-form-room/modal-form-room.page';
@@ -31,11 +35,20 @@ export class RoomsScreenPage implements OnInit {
     this.presentModal();
   }
 
+  newRoom() {
+    this.store.dispatch(unSelectRoom());
+    this.presentModal();
+  }
+
   async presentModal() {
     const modal = await this.modalController.create({
       component: ModalFormRoomPage,
       cssClass: 'my-custom-class',
     });
-    return await modal.present();
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    console.log('onWillDismiss');
+
+    console.log(data);
   }
 }

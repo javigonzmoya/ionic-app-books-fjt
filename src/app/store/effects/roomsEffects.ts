@@ -50,4 +50,63 @@ export class RoomsEffects {
       ),
     { dispatch: false } //sin llamada api
   );
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  addRoom$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(roomsActions.addRoom), //ofType: filtamos que este pendiente de una accion
+      // switchMap: pedimos la data al servicio hhtp
+      switchMap((action) =>
+        this.roomsService.addRoom(action.room).pipe(
+          map((resp) => roomsActions.addRoomSuccess({ room: action.room })),
+          catchError((error) => {
+            console.log('error');
+            this.store.dispatch(stopLoading());
+            return of(roomsActions.roomsError({ payload: error }));
+          })
+        )
+      )
+    )
+  );
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  addRoomSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(roomsActions.addRoomSuccess),
+        tap((action) => {
+          this.store.dispatch(stopLoading());
+        })
+      ),
+    { dispatch: false } //sin llamada api
+  );
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  editRoom$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(roomsActions.editRoom), //ofType: filtamos que este pendiente de una accion
+      // switchMap: pedimos la data al servicio hhtp
+      switchMap((action) =>
+        this.roomsService.editRoom(action.id, action.room).pipe(
+          map((resp) =>
+            roomsActions.editRoomSuccess({ id: action.id, room: action.room })
+          ),
+          catchError((error) => {
+            console.log('error');
+            this.store.dispatch(stopLoading());
+            return of(roomsActions.roomsError({ payload: error }));
+          })
+        )
+      )
+    )
+  );
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  editRoomSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(roomsActions.editRoomSuccess),
+        tap((action) => {
+          this.store.dispatch(stopLoading());
+        })
+      ),
+    { dispatch: false } //sin llamada api
+  );
 }

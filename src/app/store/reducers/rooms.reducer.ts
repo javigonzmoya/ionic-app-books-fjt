@@ -1,6 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
 import { Room } from 'src/app/private/models/room.model';
 import {
+  addRoom,
+  addRoomSuccess,
+  editRoom,
+  editRoomSuccess,
   loadRooms,
   loadRoomsSuccess,
   selectRoom,
@@ -26,7 +30,22 @@ const _roomsReducer = createReducer(
   on(loadRooms, (state) => ({ ...state })),
   on(loadRoomsSuccess, (state, { rooms }) => ({ ...state, rooms })),
   on(selectRoom, (state, { roomSelected }) => ({ ...state, roomSelected })),
-  on(unSelectRoom, (state) => ({ ...state, roomSelected: null }))
+  on(unSelectRoom, (state) => ({ ...state, roomSelected: null })),
+  on(addRoom, (state) => ({ ...state })),
+  on(addRoomSuccess, (state, { room }) => ({
+    ...state,
+    rooms: [...state.rooms, room],
+  })),
+  on(editRoom, (state) => ({ ...state })),
+  on(editRoomSuccess, (state, { id, room }) => ({
+    ...state,
+    rooms: state.rooms.map((oldRoom) => {
+      if (oldRoom.id === id) {
+        return room;
+      }
+      return oldRoom;
+    }),
+  }))
 );
 
 export const roomsReducer = (state, action) => _roomsReducer(state, action);
