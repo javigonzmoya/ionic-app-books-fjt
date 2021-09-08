@@ -9,6 +9,7 @@ import { RoomsScreenPageRoutingModule } from './rooms-screen-routing.module';
 import { RoomsScreenPage } from './rooms-screen.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { ModalFormRoomPage } from './modal-form-room/modal-form-room.page';
+import { RoomComponent } from './components/room/room.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,6 @@ import { ModalFormRoomPage } from './modal-form-room/modal-form-room.page';
     IonicModule,
     RoomsScreenPageRoutingModule,
   ],
-  declarations: [RoomsScreenPage, ModalFormRoomPage],
+  declarations: [RoomsScreenPage, ModalFormRoomPage, RoomComponent],
 })
 export class RoomsScreenPageModule {}

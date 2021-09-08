@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import { addRoom, editRoom } from 'src/app/store/actions/rooms';
+import { ToastService } from 'src/app/core/services/toast.service';
+import { addRoom, deleteRoom, editRoom } from 'src/app/store/actions/rooms';
 import { startLoading } from 'src/app/store/actions/ui/ui.actions';
 import { AppState } from 'src/app/store/app.reducers';
 import { Room } from '../../models/room.model';
@@ -20,7 +21,7 @@ export class ModalFormRoomPage implements OnInit {
   constructor(
     public modalController: ModalController,
     private store: Store<AppState>,
-    private translate: TranslateService
+    private toasCrt: ToastService
   ) {}
 
   ngOnInit() {
@@ -40,6 +41,7 @@ export class ModalFormRoomPage implements OnInit {
       this.capacity.trim().length < 3 ||
       this.description.trim().length < 3
     ) {
+      this.toasCrt.presentToast('Error al introducir los datos');
       return;
     }
     const room: Room = {
@@ -58,6 +60,7 @@ export class ModalFormRoomPage implements OnInit {
   }
 
   deleteRoom() {
+    this.store.dispatch(deleteRoom({ id: this.roomSelected.id }));
     this.modalController.dismiss();
   }
 

@@ -9,6 +9,8 @@ import {
   loadRoomsSuccess,
   selectRoom,
   unSelectRoom,
+  deleteRoom,
+  deleteRoomSuccess,
 } from '../actions/rooms/rooms.actions';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -41,10 +43,15 @@ const _roomsReducer = createReducer(
     ...state,
     rooms: state.rooms.map((oldRoom) => {
       if (oldRoom.id === id) {
-        return room;
+        return { id, ...room };
       }
       return oldRoom;
     }),
+  })),
+  on(deleteRoom, (state) => ({ ...state })),
+  on(deleteRoomSuccess, (state, { id }) => ({
+    ...state,
+    rooms: state.rooms.filter((oldRoom) => oldRoom.id !== id),
   }))
 );
 

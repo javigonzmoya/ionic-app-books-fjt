@@ -6,7 +6,7 @@
         {{"EXIT" | translate}}
       </ion-button>
     </ion-buttons>
-    <ion-title>{{ roomSelect ? 'Nueva' : 'Editar'}}</ion-title>
+    <ion-title>{{ roomSelected ? 'Editar' : 'Nueva'}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -54,7 +54,12 @@
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button color="danger" expand="block" (click)="deleteRoom()">
+        <ion-button
+          *ngIf="roomSelected"
+          color="danger"
+          expand="block"
+          (click)="deleteRoom()"
+        >
           <ion-icon slot="start" name="trash-outline"></ion-icon>
           {{"DELETE" | translate}}
         </ion-button>

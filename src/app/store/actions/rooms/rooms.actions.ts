@@ -35,6 +35,16 @@ export const editRoomSuccess = createAction(
   props<{ id: string; room: Room }>()
 );
 
+export const deleteRoom = createAction(
+  '[Rooms] Delete Room',
+  props<{ id: string }>()
+);
+
+export const deleteRoomSuccess = createAction(
+  '[Rooms] Delete Room Success',
+  props<{ id: string }>()
+);
+
 export const roomsError = createAction(
   '[Rooms] rooms Error',
   props<{ payload: any }>()

@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
-import {
-  loadRooms,
-  selectRoom,
-  unSelectRoom,
-} from 'src/app/store/actions/rooms';
+import { loadRooms, unSelectRoom } from 'src/app/store/actions/rooms';
 import { AppState } from 'src/app/store/app.reducers';
 import { Room } from '../models/room.model';
 import { ModalFormRoomPage } from './modal-form-room/modal-form-room.page';
@@ -25,14 +21,8 @@ export class RoomsScreenPage implements OnInit {
   ngOnInit() {
     this.store.dispatch(loadRooms());
     this.store.select('rooms').subscribe(({ rooms }) => {
-      console.log(rooms);
       this.rooms = rooms;
     });
-  }
-
-  selectRoom(roomSelected: Room) {
-    this.store.dispatch(selectRoom({ roomSelected }));
-    this.presentModal();
   }
 
   newRoom() {
@@ -47,8 +37,5 @@ export class RoomsScreenPage implements OnInit {
     });
     await modal.present();
     const { data } = await modal.onWillDismiss();
-    console.log('onWillDismiss');
-
-    console.log(data);
   }
 }

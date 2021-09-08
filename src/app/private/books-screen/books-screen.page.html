@@ -1,9 +1,12 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>booksScreen</ion-title>
-  </ion-toolbar>
+  <ion-item>
+    <ion-label>Salas</ion-label>
+    <ion-select [(ngModel)]="roomSelected" placeholder="Selecciona una sala">
+      <ng-container *ngFor="let room of rooms">
+        <ion-select-option [value]="room.id">{{room.name}}</ion-select-option>
+      </ng-container>
+    </ion-select>
+  </ion-item>
 </ion-header>
 
-<ion-content>
-
-</ion-content>
+<ion-content> </ion-content>
