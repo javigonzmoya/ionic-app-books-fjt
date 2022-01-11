@@ -1,9 +1,30 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>calendarScreen</ion-title>
+    <ion-title slot="start">{{viewTitle | date:'d/M/yyyy'}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [disabled]="isToday" (click)="today()">Hoy</ion-button>
+      <ion-button (click)="changeMode('month')">Mes</ion-button>
+      <ion-button (click)="changeMode('week')">Semana</ion-button>
+      <ion-button (click)="changeMode('day')">Dia</ion-button>
+      <ion-button (click)="loadEvents()">Load Events</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <calendar
+    [eventSource]="eventSource"
+    [calendarMode]="calendar.mode"
+    [currentDate]="calendar.currentDate"
+    (onCurrentDateChanged)="onCurrentDateChanged($event)"
+    (onEventSelected)="onEventSelected($event)"
+    (onTitleChanged)="onViewTitleChanged($event)"
+    (onTimeSelected)="onTimeSelected($event)"
+    [step]="calendar.step"
+  >
+  </calendar>
+  <ion-button *ngIf="selectDate" shape="round" class="fixed" (click)="presentModal()">
+    <ion-icon slot="icon-only" name="add"></ion-icon>
+    Reserva
+  </ion-button>
 </ion-content>

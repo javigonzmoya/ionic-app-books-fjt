@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { Room } from 'src/app/private/models/room.model';
+import { Room } from 'src/app/private/models/room.interface';
 import {
   addRoom,
   addRoomSuccess,

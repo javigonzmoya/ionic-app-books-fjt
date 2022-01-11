@@ -8,13 +8,19 @@ import { CalendarScreenPageRoutingModule } from './calendar-screen-routing.modul
 
 import { CalendarScreenPage } from './calendar-screen.page';
 
+import { NgCalendarModule } from 'ionic2-calendar';
+import { ModalBookPage } from './modal-book/modal-book.page';
+import { TranslateModule } from '@ngx-translate/core';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CalendarScreenPageRoutingModule
+    TranslateModule,
+    NgCalendarModule,
+    CalendarScreenPageRoutingModule,
   ],
-  declarations: [CalendarScreenPage]
+  declarations: [CalendarScreenPage, ModalBookPage],
 })
 export class CalendarScreenPageModule {}

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { loadBooks } from 'src/app/store/actions/books';
-import { loadRooms } from 'src/app/store/actions/rooms';
+import { loadBooks } from 'src/app/store/actions';
+import { loadRooms } from 'src/app/store/actions';
 import { AppState } from 'src/app/store/app.reducers';
 import { Book } from '../models/books.interfaces';
-import { Room } from '../models/room.model';
+import { Room } from '../models/room.interface';
 
 @Component({
   selector: 'app-books-screen',

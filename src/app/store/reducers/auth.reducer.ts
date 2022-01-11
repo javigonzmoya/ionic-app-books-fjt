@@ -7,7 +7,7 @@ import {
   logout,
   register,
   renewToken,
-} from '../actions/auth';
+} from '../actions';
 
 export interface AuthState {
   user: User;

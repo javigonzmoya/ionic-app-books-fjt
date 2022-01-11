@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
-import { Room } from 'src/app/private/models/room.model';
-import { selectRoom } from 'src/app/store/actions/rooms';
+import { Room } from 'src/app/private/models/room.interface';
+import { selectRoom } from 'src/app/store/actions';
 import { AppState } from 'src/app/store/app.reducers';
 import { ModalFormRoomPage } from '../../modal-form-room/modal-form-room.page';
 

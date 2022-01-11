@@ -6,8 +6,8 @@ import { CalendarScreenPage } from './calendar-screen.page';
 const routes: Routes = [
   {
     path: '',
-    component: CalendarScreenPage
-  }
+    component: CalendarScreenPage,
+  },
 ];
 
 @NgModule({

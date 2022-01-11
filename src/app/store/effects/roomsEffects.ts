@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
-import * as roomsActions from '../actions/rooms';
+import * as roomsActions from '../actions';
 import { of } from 'rxjs'; //crea observable
 import { stopLoading } from '../actions/ui/ui.actions';
 import { Store } from '@ngrx/store';
@@ -11,20 +11,6 @@ import { ToastService } from 'src/app/core/services/toast.service';
 
 @Injectable()
 export class RoomsEffects {
-  constructor(
-    private actions$: Actions,
-    private roomsService: RoomsService,
-    private store: Store<AppState>,
-    private toasService: ToastService
-  ) {}
-
-  //   callLoadRoomsSuccess(resp: { ok: boolean; rooms: Room[] }) {
-  //     return roomsActions.loadRoomsSuccess({
-  //       rooms: resp.rooms,
-  //     });
-  //   }
-
-  // eslint-disable-next-line @typescript-eslint/member-ordering
   loadRooms$ = createEffect(() =>
     this.actions$.pipe(
       ofType(roomsActions.loadRooms), //ofType: filtamos que este pendiente de una accion
@@ -41,7 +27,7 @@ export class RoomsEffects {
       )
     )
   );
-  // eslint-disable-next-line @typescript-eslint/member-ordering
+
   loadRoomsSuccess$ = createEffect(
     () =>
       this.actions$.pipe(
@@ -53,16 +39,16 @@ export class RoomsEffects {
     { dispatch: false } //sin llamada api
   );
 
-  // eslint-disable-next-line @typescript-eslint/member-ordering
   addRoom$ = createEffect(() =>
     this.actions$.pipe(
       ofType(roomsActions.addRoom), //ofType: filtamos que este pendiente de una accion
       // switchMap: pedimos la data al servicio hhtp
       switchMap((action) =>
         this.roomsService.addRoom(action.room).pipe(
-          map((resp) => roomsActions.addRoomSuccess({ room: action.room })),
+          map((resp) => roomsActions.addRoomSuccess({ room: resp.room })),
           catchError((error) => {
             console.log('error');
+            this.toasService.presentToast(`Error!! ${error.error.msg}`);
             this.store.dispatch(stopLoading());
             return of(roomsActions.roomsError({ payload: error }));
           })
@@ -70,7 +56,7 @@ export class RoomsEffects {
       )
     )
   );
-  // eslint-disable-next-line @typescript-eslint/member-ordering
+
   addRoomSuccess$ = createEffect(
     () =>
       this.actions$.pipe(
@@ -81,7 +67,7 @@ export class RoomsEffects {
       ),
     { dispatch: false } //sin llamada api
   );
-  // eslint-disable-next-line @typescript-eslint/member-ordering
+
   editRoom$ = createEffect(() =>
     this.actions$.pipe(
       ofType(roomsActions.editRoom), //ofType: filtamos que este pendiente de una accion
@@ -93,7 +79,6 @@ export class RoomsEffects {
           ),
           catchError((error) => {
             this.toasService.presentToast(`Error!! ${error.error.msg}`);
-            console.log('error');
             this.store.dispatch(stopLoading());
             return of(roomsActions.roomsError({ payload: error }));
           })
@@ -101,7 +86,7 @@ export class RoomsEffects {
       )
     )
   );
-  // eslint-disable-next-line @typescript-eslint/member-ordering
+
   editRoomSuccess$ = createEffect(
     () =>
       this.actions$.pipe(
@@ -112,7 +97,7 @@ export class RoomsEffects {
       ),
     { dispatch: false } //sin llamada api
   );
-  // eslint-disable-next-line @typescript-eslint/member-ordering
+
   deleteRoom$ = createEffect(() =>
     this.actions$.pipe(
       ofType(roomsActions.deleteRoom),
@@ -129,7 +114,7 @@ export class RoomsEffects {
       )
     )
   );
-  // eslint-disable-next-line @typescript-eslint/member-ordering
+
   deleteRoomSuccess$ = createEffect(
     () =>
       this.actions$.pipe(
@@ -140,4 +125,11 @@ export class RoomsEffects {
       ),
     { dispatch: false } //sin llamada api
   );
+
+  constructor(
+    private actions$: Actions,
+    private roomsService: RoomsService,
+    private store: Store<AppState>,
+    private toasService: ToastService
+  ) {}
 }

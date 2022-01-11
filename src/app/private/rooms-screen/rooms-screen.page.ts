@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
-import { loadRooms, unSelectRoom } from 'src/app/store/actions/rooms';
+import { loadRooms, unSelectRoom } from 'src/app/store/actions';
 import { AppState } from 'src/app/store/app.reducers';
-import { Room } from '../models/room.model';
+import { Room } from '../models/room.interface';
 import { ModalFormRoomPage } from './modal-form-room/modal-form-room.page';
 
 @Component({

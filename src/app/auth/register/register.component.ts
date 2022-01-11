@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { validateMachPassword } from 'src/app/core/helpers/custom.validators';
 import { ReqRegister } from 'src/app/core/models/reqRegister.model';
 import { ToastService } from 'src/app/core/services/toast.service';
-import { register } from 'src/app/store/actions/auth';
+import { register } from 'src/app/store/actions';
 import { AppState } from 'src/app/store/app.reducers';
 
 @Component({

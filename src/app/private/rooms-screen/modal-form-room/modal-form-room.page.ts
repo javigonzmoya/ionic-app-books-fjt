@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
 import { ToastService } from 'src/app/core/services/toast.service';
-import { addRoom, deleteRoom, editRoom } from 'src/app/store/actions/rooms';
+import { addRoom, deleteRoom, editRoom } from 'src/app/store/actions';
 import { startLoading } from 'src/app/store/actions/ui/ui.actions';
 import { AppState } from 'src/app/store/app.reducers';
-import { Room } from '../../models/room.model';
+import { Room } from '../../models/room.interface';
 
 @Component({
   selector: 'app-modal-form-room',

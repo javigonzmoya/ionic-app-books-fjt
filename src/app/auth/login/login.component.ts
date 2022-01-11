@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { ToastService } from 'src/app/core/services/toast.service';
-import { login } from 'src/app/store/actions/auth';
+import { login } from 'src/app/store/actions';
 import { startLoading } from 'src/app/store/actions/ui/ui.actions';
 import { AppState } from 'src/app/store/app.reducers';
 

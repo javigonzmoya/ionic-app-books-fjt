@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Room } from 'src/app/private/models/room.model';
+import { Room } from 'src/app/private/models/room.interface';
 
 export const loadRooms = createAction('[Rooms] Load Rooms');
 

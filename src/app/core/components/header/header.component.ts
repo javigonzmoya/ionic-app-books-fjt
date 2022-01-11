@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { logout } from 'src/app/store/actions/auth';
+import { logout } from 'src/app/store/actions';
 import { AppState } from 'src/app/store/app.reducers';
 import { User } from '../../models/user.model';
 

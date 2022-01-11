@@ -11,7 +11,7 @@ import { Store } from '@ngrx/store';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { renewToken } from 'src/app/store/actions/auth';
+import { renewToken } from 'src/app/store/actions';
 import { AppState } from 'src/app/store/app.reducers';
 
 @Injectable({
