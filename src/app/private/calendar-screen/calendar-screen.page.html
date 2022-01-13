@@ -23,8 +23,8 @@
     [step]="calendar.step"
   >
   </calendar>
-  <ion-button *ngIf="selectDate" shape="round" class="fixed" (click)="presentModal()">
+  <ion-button shape="round" class="fixed" (click)="presentModal()">
     <ion-icon slot="icon-only" name="add"></ion-icon>
-    Reserva
+    {{isNewEvent ? 'Nueva Reserva' : 'Editar Reserva'}}
   </ion-button>
 </ion-content>

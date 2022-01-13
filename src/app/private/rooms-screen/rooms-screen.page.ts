@@ -38,4 +38,5 @@ export class RoomsScreenPage implements OnInit {
     await modal.present();
     const { data } = await modal.onWillDismiss();
   }
+
 }

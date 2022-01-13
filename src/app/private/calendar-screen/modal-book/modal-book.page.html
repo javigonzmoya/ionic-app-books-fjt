@@ -11,120 +11,130 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid fixed>
-    <ion-row>
-      <ion-col size="6">
-        <ion-item>
-          <ion-label position="floating">Titulo</ion-label>
-          <ion-input
-            [(ngModel)]="title"
-            type="text"
-            placeholder="Titulo"
-          ></ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col size="6"
-        ><ion-item>
-          <ion-label position="floating">Destinatario</ion-label>
-          <ion-input
-            [(ngModel)]="destinatario"
-            type="text"
-            placeholder="Destinatario"
-          ></ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col size="6">
-        <ion-item>
-          <ion-label position="floating">Dia Inicio</ion-label>
-          <ion-datetime
-            [(ngModel)]="startDay"
-            displayFormat="DD-MM-YYYY"
-            pickerFormat="DD MM YYYY"
-          ></ion-datetime>
-        </ion-item>
-      </ion-col>
-      <ion-col size="6">
-        <ion-item>
-          <ion-label position="floating">Hora Inicio</ion-label>
-          <ion-datetime
-            [(ngModel)]="startHour"
-            displayFormat="HH:mm"
-            pickerFormat="HH:mm"
-          ></ion-datetime>
-        </ion-item>
-      </ion-col>
-      <ion-col size="6">
-        <ion-item>
-          <ion-label position="floating">Dia Fin</ion-label>
-          <ion-datetime
-            [(ngModel)]="endDay"
-            displayFormat="DD-MM-YYYY"
-            pickerFormat="DD MM YYYY"
-          ></ion-datetime>
-        </ion-item>
-      </ion-col>
-      <ion-col size="6">
-        <ion-item>
-          <ion-label position="floating">Hora Fin</ion-label>
-          <ion-datetime
-            [(ngModel)]="endHour"
-            displayFormat="HH:mm"
-            pickerFormat="HH:mm"
-          ></ion-datetime>
-        </ion-item>
-      </ion-col>
-      <ion-col size="12">
-        <ion-item>
-          <ion-label position="floating">Anotaciones</ion-label>
-          <ion-textarea
-            [(ngModel)]="notes"
-            placeholder="Escribe sus anotaciones..."
-          ></ion-textarea>
-        </ion-item>
-      </ion-col>
-      <ion-col size="12">
-        <ion-item>
-          <ion-label>Salas</ion-label>
-          <ion-select
-            [(ngModel)]="roomSelectedId"
-            placeholder="Selecciona una sala"
+  <form *ngIf="bookForm" [formGroup]="bookForm">
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label position="floating">Titulo</ion-label>
+            <ion-input
+              formControlName="title"
+              type="text"
+              placeholder="Titulo"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6"
+          ><ion-item>
+            <ion-label position="floating">Destinatario</ion-label>
+            <ion-input
+              formControlName="destinatario"
+              type="text"
+              placeholder="Destinatario"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label position="floating">Dia Inicio</ion-label>
+            <ion-datetime
+              [max]="maxYear"
+              (ngModelChange)="loadMinDate($event)"
+              formControlName="startDay"
+              displayFormat="DD-MM-YYYY"
+              pickerFormat="DD MM YYYY"
+            ></ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label position="floating">Hora Inicio</ion-label>
+            <ion-datetime
+              (ngModelChange)="loadMinHour($event)"
+              formControlName="startHour"
+              minuteValues="0,15,30,45"
+              displayFormat="HH:mm"
+              pickerFormat="HH:mm"
+            ></ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label position="floating">Dia Fin</ion-label>
+            <ion-datetime
+              [max]="maxYear"
+              [min]="minDate"
+              formControlName="endDay"
+              displayFormat="DD-MM-YYYY"
+              pickerFormat="DD MM YYYY"
+            ></ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label position="floating">Hora Fin</ion-label>
+            <ion-datetime
+              [min]="minHour"
+              minuteValues="0,15,30,45"
+              formControlName="endHour"
+              displayFormat="HH:mm"
+              pickerFormat="HH:mm"
+            ></ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">Anotaciones</ion-label>
+            <ion-textarea
+              formControlName="notes"
+              placeholder="Escribe sus anotaciones..."
+            ></ion-textarea>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label>Salas</ion-label>
+            <ion-select
+              formControlName="roomSelectedId"
+              placeholder="Selecciona una sala"
+            >
+              <ng-container *ngFor="let room of rooms">
+                <ion-select-option [value]="room.id"
+                  >{{room.name}}</ion-select-option
+                >
+              </ng-container>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button expand="block" (click)="saveBook()">
+            <ion-icon slot="start" name="save-outline"></ion-icon>
+            {{"SAVE" | translate}}
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button
+            *ngIf="roomSelected"
+            color="danger"
+            expand="block"
+            (click)="deleteBook()"
           >
-            <ng-container *ngFor="let room of rooms">
-              <ion-select-option [value]="room.id"
-                >{{room.name}}</ion-select-option
-              >
-            </ng-container>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-button expand="block" (click)="saveBook()">
-          <ion-icon slot="start" name="save-outline"></ion-icon>
-          {{"SAVE" | translate}}
-        </ion-button>
-      </ion-col>
-      <ion-col>
-        <ion-button
-          *ngIf="roomSelected"
-          color="danger"
-          expand="block"
-          (click)="deleteBook()"
-        >
-          <ion-icon slot="start" name="trash-outline"></ion-icon>
-          {{"DELETE" | translate}}
-        </ion-button>
-        <ion-button
-          *ngIf="!roomSelected"
-          color="danger"
-          expand="block"
-          (click)="exit()"
-        >
-          <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
-          Salir
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+            <ion-icon slot="start" name="trash-outline"></ion-icon>
+            {{"DELETE" | translate}}
+          </ion-button>
+          <ion-button
+            *ngIf="!roomSelected"
+            color="danger"
+            expand="block"
+            (click)="exit()"
+          >
+            <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+            Salir
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
 </ion-content>

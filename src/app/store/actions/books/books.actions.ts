@@ -10,7 +10,7 @@ export const loadBooksSuccess = createAction(
 
 export const selectBook = createAction(
   '[Books] Select Book',
-  props<{ bookSelected: Book }>()
+  props<{ bookId: string }>()
 );
 
 export const unSelectBook = createAction('[Books] UnSelect Book');

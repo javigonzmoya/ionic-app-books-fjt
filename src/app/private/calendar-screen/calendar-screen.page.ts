@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { CalendarMode, Step } from 'ionic2-calendar/calendar';
 import { ModalBookPage } from './modal-book/modal-book.page';
+import { AppState } from '../../store/app.reducers';
+import { Store } from '@ngrx/store';
+import * as actions from '../../store/actions';
+import { Room } from '../models/room.interface';
+import { selectBookById } from 'src/app/store/helpers/book.helper';
 
 @Component({
   selector: 'app-calendar-screen',
@@ -11,7 +16,8 @@ import { ModalBookPage } from './modal-book/modal-book.page';
 export class CalendarScreenPage implements OnInit {
   eventSource: any;
   viewTitle: string;
-  selectDate: Date;
+  isNewEvent = true;
+  rooms: Room[] = [];
 
   isToday: boolean;
   calendar = {
@@ -30,12 +36,21 @@ export class CalendarScreenPage implements OnInit {
     },
   };
 
-  constructor(public modalCtrl: ModalController) {}
+  constructor(
+    public modalCtrl: ModalController,
+    private store: Store<AppState>
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.store.dispatch(actions.loadBooks());
+    this.store.dispatch(actions.loadRooms());
+    this.store.select('rooms').subscribe(({ rooms }) => {
+      this.rooms = rooms;
+    });
+  }
 
   loadEvents() {
-    this.eventSource = this.createRandomEvents();
+    this.getEvents();
     console.log(this.eventSource);
   }
 
@@ -43,15 +58,11 @@ export class CalendarScreenPage implements OnInit {
     this.viewTitle = title;
   }
 
-  onEventSelected(event) {
-    console.log(
-      'Event selected:' +
-        event.startTime +
-        '-' +
-        event.endTime +
-        ',' +
-        event.title
-    );
+  onEventSelected(event: any) {
+    console.log('onEventSelected');
+
+    this.isNewEvent = false;
+    selectBookById(this.store, event.id);
   }
 
   changeMode(mode) {
@@ -70,17 +81,8 @@ export class CalendarScreenPage implements OnInit {
   }
 
   onTimeSelected(ev) {
-    this.selectDate = new Date(ev.selectedTime);
-    console.log(this.selectDate);
-
-    console.log(
-      'Selected time: ' +
-        ev.selectedTime +
-        ', hasEvents: ' +
-        (ev.events !== undefined && ev.events.length !== 0) +
-        ', disabled: ' +
-        ev.disabled
-    );
+    this.isNewEvent = true;
+    console.log('onTimeSelected');
   }
 
   onCurrentDateChanged(event: Date) {
@@ -88,6 +90,24 @@ export class CalendarScreenPage implements OnInit {
     today.setHours(0, 0, 0, 0);
     event.setHours(0, 0, 0, 0);
     this.isToday = today.getTime() === event.getTime();
+  }
+
+  getRoomById(idSala: string) {
+    return this.rooms.find(({ id }) => id === idSala);
+  }
+
+  getEvents() {
+    this.store.select('books').subscribe(({ books }) => {
+      this.eventSource = books.map((ev) => ({
+        title: `Sala: ${this.getRoomById(ev.room).name} / Destinatario: ${
+          ev.destinatario
+        } (${ev.title})`,
+        startTime: new Date(ev.start),
+        endTime: new Date(ev.end),
+        allDay: false,
+        id: ev.id,
+      }));
+    });
   }
 
   createRandomEvents() {

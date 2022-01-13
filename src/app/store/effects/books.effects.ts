@@ -8,7 +8,6 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../app.reducers';
 import { BooksService } from 'src/app/private/services/books.service';
 import { ToastService } from 'src/app/core/services/toast.service';
-import { addBook } from '../actions/books/books.actions';
 
 @Injectable()
 export class BooksEffects {

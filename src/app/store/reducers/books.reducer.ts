@@ -12,7 +12,7 @@ import {
   unSelectBook,
   deleteBook,
   deleteBookSuccess,
-} from '../actions/Books/Books.actions';
+} from '../actions/books/books.actions';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export interface BooksState {
@@ -32,7 +32,10 @@ const _booksReducer = createReducer(
   bookInitialState,
   on(loadBooks, (state) => ({ ...state })),
   on(loadBooksSuccess, (state, { books }) => ({ ...state, books })),
-  on(selectBook, (state, { bookSelected }) => ({ ...state, bookSelected })),
+  on(selectBook, (state, { bookId }) => ({
+    ...state,
+    bookSelected: state.books.find(({ id }) => id === bookId),
+  })),
   on(unSelectBook, (state) => ({ ...state, bookSelected: null })),
   on(addBook, (state) => ({ ...state })),
   on(addBookSuccess, (state, { book }) => ({

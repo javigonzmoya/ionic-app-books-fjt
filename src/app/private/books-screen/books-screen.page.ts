@@ -14,11 +14,14 @@ import { Room } from '../models/room.interface';
 export class BooksScreenPage implements OnInit {
   rooms: Room[] = [];
   books: Book[] = [];
+  generator = this.generatorFn();
   roomSelected: Room = null;
 
   constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
+    console.log(this.generator.next());
+    console.log(this.generator.next());
     this.store.dispatch(loadRooms());
     this.store.dispatch(loadBooks());
     this.store.select('rooms').subscribe(({ rooms }) => {
@@ -28,5 +31,10 @@ export class BooksScreenPage implements OnInit {
       this.books = books;
       console.log(books);
     });
+  }
+
+  *generatorFn() {
+    yield 2;
+    yield 3;
   }
 }
